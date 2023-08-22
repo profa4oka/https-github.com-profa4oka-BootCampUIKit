@@ -9,28 +9,32 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    //MARK: Label to display TextField
     @IBOutlet weak var textLabel: UILabel!
+    //MARK: Enter info
     @IBOutlet weak var textName: UITextField!
     @IBAction func showAlert(_ sender: Any) {
-        let alertControl = UIAlertController(title: "Error", message: "Message", preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default) { (action) in
-            let fieldText = alertControl.textFields?.first
-            self.textLabel.text = fieldText?.text!
-        }
-        alertControl.addTextField { (textField) in
-        }
-        alertControl.addAction(action)
-        self.present(alertControl, animated: true)
+        let customerAlert = showCustomAlert(title: "Header Menu", message: "Enter your name:", style: .alert)
+        present(customerAlert, animated: true)
     }
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
     
-    //MARK: TEST DESCRIPTION
-
-
+    //MARK: func customAlert
+    func showCustomAlert(title: String, message: String, style: UIAlertController.Style) -> UIAlertController {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
+        let actionController = UIAlertAction(title: "OK", style: .default) { _ in
+            if let text = alertController.textFields?.first {
+                self.textLabel.text = text.text
+            } else {
+                self.textLabel.text = "Empty"
+            }
+        }
+        alertController.addTextField()
+        alertController.addAction(actionController)
+        return alertController
+    }
 }
 
